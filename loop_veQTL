@@ -1,0 +1,10 @@
+veQTL=Path/to/veQTL_engine.R
+genotype=Path/to/large/genotype
+
+split -l 15000 $genotype  ## can set lines to desired amount
+head -n 1 xaa > header
+
+for file in xa[b-z]; do cat header $file > tmp; mv tmp $file; done ## add header line to each chunck
+
+# Careful not to pass too many job. E.g. limit to five with `for 1 in xa[a-e]`, this will use five processors
+for i in xa*; do nohup Rscript $veQTL $i & done 
