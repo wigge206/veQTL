@@ -7,9 +7,12 @@ Requires genotype to be a 012 matrix where genotypes are represented as the coun
 For expression data this needs to be a matrix of expression values transcript ID (or other unique identifiers) as rownames.
 
 ## veQTL_engine
-Currently, this computes only the Brown-Forsythe test (a robust levenes tests) on all genotypes compared to all transcripts. Any statistic meet the threshold (lines 85-90) will be retained and have p-values calcualated.
+Currently, this computes only the Brown-Forsythe test (a robust Levene's tests) on all genotypes compared to all transcripts. Any statistic meet the threshold (lines 85-90) will be retained and have p-values calculated.
 ### Estimate W threshold
 Use `1-pf(1:100, 3-1, N-1)` to estimate p-value for W statistic from 1-100, set N at the smallest number of called genotypes. Repeat for two genotypes e.g( `1-pf(1:100,2-1,N-1)` ), find the smallest W the meets your desired p-value.
 
 ## Output
-Data is output as a list of SNP with transcript statistics and pvalues, this is messy but can use veQTL_wrangler.R to tidy up and add annotation as desired.  
+Data is output as a list of SNP with transcript statistics and pvalues, this is messy but can use `veQTL_wrangler.R` to tidy up and add annotation as desired.  
+
+## Implementation of large genotypes
+Genotypes can be split into chunks and run in parallel using `split` in unix and passing each chunk into a new instance of R with `Rscript` and a `for` loop (Example in loop_veQTL). The `veQTL_wrangler` script is able to stitch these together. 
