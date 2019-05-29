@@ -19,7 +19,7 @@ results<-apply(snps,1, function(group){
   gr <- group %in% gr[gr!=-1]
 
   group <- group[gr]
-  y <- expr[gr]
+  y <- expr[,gr]
   #tmp = rownames(group)
   #tmp = c(tmp,rownames(y))
 
@@ -34,15 +34,15 @@ results<-apply(snps,1, function(group){
 
   ## Calc Yi_bar (rowMedians) for each transcript.
   if (length(levels(group)) == 2){
-  Yi_bar1 <- rowMedians(as.matrix(y[group==levels(group)[1]]))
-  Yi_bar2 <- rowMedians(as.matrix(y[group==levels(group)[2]]))
+  Yi_bar1 <- rowMedians(as.matrix(y[,group==levels(group)[1]]))
+  Yi_bar2 <- rowMedians(as.matrix(y[,group==levels(group)[2]]))
   Yi_bar <- rbind(Yi_bar1, Yi_bar2)
   rownames(Yi_bar) <- levels(group)
   colnames(Yi_bar) <- rownames(y)
   } else {
-  Yi_bar1 <- rowMedians(as.matrix(y[group==levels(group)[1]]))
-  Yi_bar2 <- rowMedians(as.matrix(y[group==levels(group)[2]]))
-  Yi_bar3 <- rowMedians(as.matrix(y[group==levels(group)[3]]))
+  Yi_bar1 <- rowMedians(as.matrix(y[,group==levels(group)[1]]))
+  Yi_bar2 <- rowMedians(as.matrix(y[,group==levels(group)[2]]))
+  Yi_bar3 <- rowMedians(as.matrix(y[,group==levels(group)[3]]))
   Yi_bar <- rbind(Yi_bar1, Yi_bar2,Yi_bar3)
   rownames(Yi_bar) <- levels(group)
   colnames(Yi_bar) <- rownames(y)
@@ -52,15 +52,15 @@ results<-apply(snps,1, function(group){
 
   ## Calc Zi. (rowMeans) for each abs deviation from medians for each transcript.
   if (length(levels(group)) == 2){
-    Zi.1 <- rowMeans(as.matrix(Zij[group==levels(group)[1]]))
-    Zi.2 <- rowMeans(as.matrix(Zij[group==levels(group)[2]]))
+    Zi.1 <- rowMeans(as.matrix(Zij[,group==levels(group)[1]]))
+    Zi.2 <- rowMeans(as.matrix(Zij[,group==levels(group)[2]]))
     Zi. <- rbind(Zi.1, Zi.2)
     rownames(Zi.) <- levels(group)
     colnames(Zi.) <- rownames(Zij)
   } else {
-    Zi.1 <- rowMeans(as.matrix(Zij[group==levels(group)[1]]))
-    Zi.2 <- rowMeans(as.matrix(Zij[group==levels(group)[2]]))
-    Zi.3 <- rowMeans(as.matrix(Zij[group==levels(group)[3]]))
+    Zi.1 <- rowMeans(as.matrix(Zij[,group==levels(group)[1]]))
+    Zi.2 <- rowMeans(as.matrix(Zij[,group==levels(group)[2]]))
+    Zi.3 <- rowMeans(as.matrix(Zij[,group==levels(group)[3]]))
     Zi. <- rbind(Zi.1, Zi.2,Zi.3)
     rownames(Zi.) <- levels(group)
     colnames(Zi.) <- rownames(y)
